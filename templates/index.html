@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple recorder server</title>
+  <style>
+    * {
+      font-family: sans-serif;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+    }
+    .button {
+      cursor: pointer;
+      border-radius: 8px;
+      border: none;
+      padding: 7px;
+      font-size: 18px;
+      background-color: rgb(34, 62, 139);
+      color: white;
+      margin-right: 18px
+    }
+    .button:hover {
+      opacity: 0.9;
+    }
+    .btn-record {
+      background-color: rgb(223, 34, 34);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title"><h1>Simple recorder server</h1></div>
+    <div class="buttons-section">
+      <button type="button" class="button btn-record" id="start-record">Record</button>
+      <button type="button" class="button" id="stop-record">Stop</button>
+    </div>
+    <div>
+      <p><b>Status:</b> <span id="state">Desconhecido</span></p>
+    </div>
+  </div>
+  <script>
+    async function startRecording() {
+      const res = await fetch("{{appLocation}}/record", {
+        method: 'POST'
+      })
+      const text = await res.text()
+      document.getElementById('state').textContent = text;
+    }
+
+    async function stopRecording() {
+      const res = await fetch("{{appLocation}}/stop", {
+        method: 'POST'
+      })
+      const text = await res.text()
+      document.getElementById('state').textContent = text;
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById('start-record').addEventListener('click', startRecording)
+      document.getElementById('stop-record').addEventListener('click', stopRecording)
+    })
+  </script>
+</body>
+</html>
