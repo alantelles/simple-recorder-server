@@ -36,4 +36,4 @@ if __name__ == "__main__":
   def index():
     return render_template('index.html', appLocation = LOCATION)
   
-  app.run(debug=True, port=5300)
+  app.run(debug=False, port=5300, host='0.0.0.0', use_evalex=False)
